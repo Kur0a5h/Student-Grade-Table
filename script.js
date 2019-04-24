@@ -58,7 +58,7 @@ function pullAPIStudentArray() {
             $('.modal-title').text('Request Error');
             $('.modal-body').text('There was an error with your request. Please try again in a few minutes.');
             
-            $('#myModal').modal('show');
+            $('#modal').modal('show');
             // open_modal(errorResponse.statusText);
       });;
 }
@@ -106,7 +106,7 @@ function deleteStudentInAPI(student_id) {
       };
       $.ajax(ajaxToLearningFuze).then(function (response) { //a promise
             clearModalContents();
-            $('#myModal').modal('hide');
+            $('#modal').modal('hide');
             console.log(response);
             if(response.success==false&&response.errors!==undefined){
                   open_modal(response.errors[0]);
@@ -128,7 +128,7 @@ function addClickHandlersToElements() {
       $('.btn-default').click(handleCancelClicked);
       $('.btn-info').click(handlePullServerDataClicked);
       
-      $('#myModal').on('hidden.bs.modal', function () { 
+      $('#modal').on('hidden.bs.modal', function () { 
             
             clearModalContents();
         });  
@@ -222,7 +222,7 @@ function renderStudentOnDom(studentObject,index) {//makes html element step 2
       });
       
       var deleteButton = $('<button>', {
-            class: 'btn btn-danger pull-right',
+            class: 'btn btn-danger',
             text: 'Delete',
             'data-student': studentObject.id,
             on: {
@@ -231,7 +231,8 @@ function renderStudentOnDom(studentObject,index) {//makes html element step 2
       });
 
       var editButton = $('<button>', {
-            class: 'btn btn-info',
+            class: 'btn btn-info ',
+            css: {'margin-right':'1rem'},
             text: 'Edit',
             'data-student': studentObject.id,
             on: {
@@ -287,7 +288,7 @@ function renderStudentOnDom(studentObject,index) {//makes html element step 2
             </form>`
 
             );
-            $('#myModal').modal('show');
+            $('#modal').modal('show');
             
             var footerContainer = $('<div>',{
                   class: 'text-center'
@@ -375,7 +376,7 @@ function renderStudentOnDom(studentObject,index) {//makes html element step 2
                   <div id="updateGradeErrorContainer" class="text-danger"></div>
             </form>`
             );
-            $('#myModal').modal('show');
+            $('#modal').modal('show');
 
             var footerContainer = $('<div>',{
                   class: 'text-center'
@@ -535,11 +536,11 @@ function handlePullServerDataClicked(){
       pullAPIStudentArray(); 
 }
 function close_modal(){
-      $('#myModal').css('display', 'none');
+      $('#modal').css('display', 'none');
 }
 function open_modal(message){
       
-      $('#myModal').css('display', 'block');
+      $('#modal').css('display', 'block');
       $('.modal-body>p').text(message)
       
 }
@@ -566,10 +567,10 @@ function saveUpdateToDb(studentInfo) {
                         $('.modal-title').text('Request Error');
                         $('.modal-body').text('There was an error with your request. Please try again in a few minutes.');
                         $('#errorText').text('Unable to perform action. Please check your permissions and try again.');
-                        $('#myModal').modal('show');
+                        $('#modal').modal('show');
                   } else if (response.success === true) {
                   
-                        $('#myModal').modal('hide');
+                        $('#modal').modal('hide');
                   } 
                   
                   pullAPIStudentArray();
@@ -579,7 +580,7 @@ function saveUpdateToDb(studentInfo) {
                   $('.modal-title').text('Request Error');
                   $('.modal-body').text('There was an error with your request. Please try again in a few minutes.');
                   
-                  $('#myModal').modal('show');
+                  $('#modal').modal('show');
             },
       }
 
@@ -673,7 +674,7 @@ function refreshData() {
                   $('#errorText').text('There was an error connecting to the server. Please try again in a few minutes');
             }
             
-            $('#myModal').modal('show');
+            $('#modal').modal('show');
       });
       
 }
@@ -683,7 +684,7 @@ function clearModalContents() {
       $('.modal-title').empty();
       $('.modal-body').empty();
       $('.modal-footer').empty();
-      // $('#myModal').modal('hide');
+      // $('#modal').modal('hide');
 }
 
 function addStudentclearErrorMessaging() {
@@ -702,7 +703,7 @@ function cancelModalAction(){
       $('.modal-title').empty();
       $('.modal-body').empty();
       $('.modal-footer').empty();
-      $('#myModal').modal('hide');
+      $('#modal').modal('hide');
 
 }
 
