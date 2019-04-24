@@ -203,14 +203,12 @@ function renderStudentOnDom(studentObject,index) {//makes html element step 2
       });
 
       var gradeContainer = $('<div>', {
+            class: 'text-right',
+            css: {'padding-right': '2rem'},
             text: studentObject.grade,
       });
 
-      var tableGrade = $('<td>', {
-            
-            
-            
-      });
+      var tableGrade = $('<td>', { });
 
       tableGrade.append(gradeContainer);
      
