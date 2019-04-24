@@ -19,7 +19,7 @@ $(document).ready(initializeApp);
  *  { name: 'Jill', course: 'Comp Sci', grade: 85 }
  * ];
  */
-var student_array;
+var student_array=[];
 var new_id;
 
 
@@ -52,13 +52,24 @@ function pullAPIStudentArray() {
             if(response.success==false&&response.errors!==undefined){
                   open_modal(response.errors[0]);
             }
-            student_array = response.data;
+            if(!response.data){
+                  $('.noData').css('display', 'block');
+            }else{
+                  $('.noData').css('display', 'none');
+                  student_array = response.data;
+            };
+            
+            
+      
+
             updateStudentList();
+            
       }).fail(function(errorResponse){
             $('.modal-title').text('Request Error');
             $('.modal-body').text('There was an error with your request. Please try again in a few minutes.');
             
             $('#modal').modal('show');
+            $('.noData').css('display', 'block');
             // open_modal(errorResponse.statusText);
       });;
 }
@@ -86,7 +97,7 @@ function createNewStudentInAPI(name,course,grade) {
                   id: response.new_id
             };
             clearAddStudentFormInputs();
-            student_array.push(studentObj)
+            student_array.push(studentObj);
             updateStudentList();
             
       }).fail(function(errorResponse){
@@ -115,6 +126,7 @@ function deleteStudentInAPI(student_id) {
             
             open_modal(errorResponse.statusText);
       });
+      updateStudentList();
 }
 /***************************************************************************************************
 * addClickHandlerstoElements
@@ -496,6 +508,11 @@ function renderStudentOnDom(studentObject,index) {//makes html element step 2
  */
 function updateStudentList() {
       $('tbody>tr').remove();
+      if(student_array===undefined || student_array.length===0){
+            $('.noData').css('display', 'block');
+            return;
+      }
+      $('.noData').css('display', 'none');
       for (var studentIndex = 0; studentIndex < student_array.length; studentIndex++) {
             renderStudentOnDom(student_array[studentIndex]);
       }
