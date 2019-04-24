@@ -351,7 +351,7 @@ function renderStudentOnDom(studentObject,index) {//makes html element step 2
                   <span class="input-group-addon">
                         <span class="glyphicon glyphicon-user"></span>
                   </span>
-                  <input pattern="^[a-zA-Z ]{3,}$" type="text" class="updateInput form-control form-rounded" name="updateName" id="updateName" value="${name.html()}">
+                  <input pattern="^[a-zA-Z ]{3,}$" onblur="validateInput(event)" type="text" class="updateInput form-control form-rounded" name="updateName" id="updateName" value="${name.html()}">
                   </div>
                   <div id="updateNameErrorContainer" class="text-danger"></div>
                   <h5>Student Course</h3>
@@ -359,7 +359,7 @@ function renderStudentOnDom(studentObject,index) {//makes html element step 2
                   <span class="input-group-addon">
                         <span class="glyphicon glyphicon-list-alt"></span>
                   </span>
-                  <input pattern="^[a-zA-Z ]{3,}$" type="text" class="updateInput form-control form-rounded" name="updateCourse" id="updateCourse"
+                  <input pattern="^[a-zA-Z ]{3,}$" onblur="validateInput(event)" type="text" class="updateInput form-control form-rounded" name="updateCourse" id="updateCourse"
                         value="${course.html()}">
                   </div>
                   <div id="updateCourseErrorContainer" class="text-danger"></div>
@@ -368,7 +368,7 @@ function renderStudentOnDom(studentObject,index) {//makes html element step 2
                   <span class="input-group-addon">
                         <span class="glyphicon glyphicon-education"></span>
                   </span>
-                  <input pattern="^[1-9][0-9]?$|^100$" type="text" class="updateInput form-control form-rounded" name="updateGrade" id="updateGrade"
+                  <input pattern="^[1-9][0-9]?$|^100$" onblur="validateInput(event)" onchange="" type="text" class="updateInput form-control form-rounded" name="updateGrade" id="updateGrade"
                         value="${grade.text()}">
                   </div>
                   <div id="updateGradeErrorContainer" class="text-danger"></div>
@@ -614,6 +614,25 @@ function validateInputs(){
 
       return validatedStatus;
 }
+function validateInput(event){
+      
+      const pattern = new RegExp(event.target.pattern)
+      
+      const value = event.target.value;
+
+      if (pattern.test(value) === false) {
+                  validatedStatus = false;
+                  if(event.target.pattern === '^[a-zA-Z ]{3,}$') {
+                        let nameCourseErrorMessage = '';
+                        nameCourseErrorMessage = "Please enter at least three letters";
+                        $(`#${event.target.name}ErrorContainer`).text(nameCourseErrorMessage);
+                  } else {
+                        let gradeMessage = '';
+                        gradeMessage = "Please enter a number between 0 and 100";
+                        $(`#${event.target.name}ErrorContainer`).text(gradeMessage);
+                  }
+      }else ($(`#${event.target.name}ErrorContainer`).text(""))
+}
 
 function validateUpdateInputs(){
       
@@ -705,4 +724,6 @@ function cancelModalAction(){
 
 }
 
-
+function updateModalOnInput(){
+      event.val
+}
